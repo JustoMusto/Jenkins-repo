@@ -26,7 +26,7 @@ pipeline {
                     }
 
                     // Clone Nginx config repository
-                    git branch: config_branch, url: 'https://github.com/JustoMusto/repo.git'
+                    git branch: config_branch, url: 'https://github.com/JustoMusto/nginx-repo.git'
 
                     // Copy Nginx config files to remote host
                     sshagent(['my-ssh-credentials']) {
