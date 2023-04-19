@@ -32,17 +32,17 @@ pipeline {
                     git branch: config_branch, url: 'https://github.com/JustoMusto/nginx-repo.git'
 
                     // Copy Nginx config files to remote host
-                    sshagent(['my-ssh-credentials']) {
+                    sshagent(['dev-credentials']) {
                         sh "scp -r nginx.conf ${lb_host}:~/nginx"
                     }
 
                     // Verify Nginx configuration on remote host
-                    sshagent(['my-ssh-credentials']) {
+                    sshagent(['dev-credentials']) {
                         sh "ssh ${lb_host} 'sudo nginx -t'"
                     }
 
                     // Create Pull Request for Prod branch if deploying to Dev environment
-                    if (params.ENVIRONMENT == 'Dev') {
+                    //if (params.ENVIRONMENT == 'Dev') {
                         // TODO: Add code to create Pull Request on Github
                     }
                 }
