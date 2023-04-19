@@ -1,4 +1,7 @@
 pipeline {
+    agent {
+        label 'my-agent'
+    }
     parameters {
         choice(
             name: 'ENVIRONMENT',
