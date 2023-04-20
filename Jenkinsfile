@@ -32,7 +32,7 @@ pipeline {
                     git branch: config_branch, url: 'https://github.com/JustoMusto/nginx-repo.git'
 
                     // Copy Nginx config files to remote host
-                    sshagent(['dev-credentials']) {
+                    sshagent(credentials: ['dev-credentials']) {
                         sh "scp -r nginx.conf ${lb_host}:~/nginx"
                     }
 
