@@ -22,7 +22,7 @@ pipeline {
 
                     if (params.ENVIRONMENT == 'Dev') {
                         config_branch = 'dev'
-                        lb_host = '20.232.207.120'
+                        lb_host = 'azureuser@20.232.207.120'
                     } else if (params.ENVIRONMENT == 'Prod') {
                         config_branch = 'prod'
                         lb_host = 'prod-load-balancer-host'
