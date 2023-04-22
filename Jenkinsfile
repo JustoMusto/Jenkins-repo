@@ -31,6 +31,11 @@ pipeline {
                     // Clone Nginx config repository
                     git branch: config_branch, url: 'https://github.com/JustoMusto/nginx-repo.git'
 
+                    // Login to azure VM
+                    sshagent(credentials: ['dev-credentials']) {
+                        sh "ssh  azureuser@20.232.207.120"
+                    }
+                    
                     // Copy Nginx config files to remote host
                     sshagent(credentials: ['dev-credentials']) {
                         sh "scp -r nginx.conf ${lb_host}:~/nginx"
