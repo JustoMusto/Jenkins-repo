@@ -11,7 +11,7 @@ pipeline {
     }
 
     stages {
-        stage('Deploy Nginx Configuration') {
+        stage('Prep') {
             when {
                 expression { params.ENVIRONMENT == 'Dev' || params.ENVIRONMENT == 'Prod' }
             }
@@ -38,7 +38,7 @@ pipeline {
                     
                     // Copy Nginx config files to remote host
                     sshagent(credentials: ['dev-credentials']) {
-                        sh "scp -r nginx.conf ${lb_host}:~/nginx"
+                        sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
                     }
 
                     // Verify Nginx configuration on remote host
