@@ -34,17 +34,18 @@ pipeline {
                     // Login to azure VM
                     sshagent(credentials: ['dev-credentials']) {
                         sh "ssh  azureuser@20.232.207.120"
+                        sh "whoami"
                     }
                     
                     // Copy Nginx config files to remote host
-                    sshagent(credentials: ['dev-credentials']) {
-                        sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
-                    }
+                    //sshagent(credentials: ['dev-credentials']) {
+                    //    sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
+                    //}
 
                     // Verify Nginx configuration on remote host
-                    sshagent(['dev-credentials']) {
-                        sh "ssh ${lb_host} 'sudo nginx -t'"
-                    }
+                    //sshagent(['dev-credentials']) {
+                    //    sh "ssh ${lb_host} 'sudo nginx -t'"
+                    //}
 
                     // Create Pull Request for Prod branch if deploying to Dev environment
                     //if (params.ENVIRONMENT == 'Dev') {
