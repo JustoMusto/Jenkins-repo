@@ -34,14 +34,14 @@ pipeline {
                     // Login to azure VM
                     sshagent(credentials: ['dev-credentials']) {
                         sh "ssh  ${lb_host}"
-                        sh 'scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf'
+                        sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
                         sh "ssh  ${lb_host} 'sudo nginx -t'"
                         
                     }
                     
                     // Copy Nginx config files to remote host
                     //sshagent(credentials: ['dev-credentials']) {
-                    //    sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
+                        sh "scp -r nginx.conf ${lb_host}:~/nginx"
                     //}
 
                     // Verify Nginx configuration on remote host
