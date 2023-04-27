@@ -34,7 +34,7 @@ pipeline {
                     // Login to azure VM
                     sshagent(credentials: ['dev-credentials']) {
                         sh "ssh  ${lb_host}"
-                        sh "ssh ${lb_host} 'sudo nginx -t'"
+                        sh 'sudo nginx -t'
                         //sh "ssh ${lb_host} 'scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf'"
                     }
                     
