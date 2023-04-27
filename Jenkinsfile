@@ -41,7 +41,7 @@ pipeline {
                     
                     // Copy Nginx config files to remote host
                     //sshagent(credentials: ['dev-credentials']) {
-                        sh "scp -r nginx.conf ${lb_host}:~/nginx"
+                    //   sh "scp -r nginx.conf ${lb_host}:~/nginx"
                     //}
 
                     // Verify Nginx configuration on remote host
