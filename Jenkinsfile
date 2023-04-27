@@ -38,11 +38,6 @@ pipeline {
                         sh "ssh  ${lb_host} 'sudo nginx -t'"
                         
                     }
-
-                    sshagent(credentials: ['dev-credentials']) {
-                        sh "ssh  ${lb_host}"
-                        sh "ssh  ${lb_host} 'sudo scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf'"
-                    }
                     
                     // Copy Nginx config files to remote host
                     //sshagent(credentials: ['dev-credentials']) {
