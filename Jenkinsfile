@@ -2,6 +2,9 @@ pipeline {
     agent {
         label 'my-agent'
     }
+    environment {
+        lb_host = ''
+    }
     parameters {
         choice(
             name: 'ENVIRONMENT',
@@ -18,7 +21,7 @@ pipeline {
             steps {
                 script {
                     def config_branch
-                    def lb_host
+                    //def lb_host
 
                     if (params.ENVIRONMENT == 'Dev') {
                         config_branch = 'dev'
