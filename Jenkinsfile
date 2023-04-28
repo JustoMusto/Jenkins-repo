@@ -31,29 +31,20 @@ pipeline {
                     // Clone Nginx config repository
                     git branch: config_branch, url: 'https://github.com/JustoMusto/nginx-repo.git'
 
-                    // Login to azure VM
+                    
+                    }
+                }
+            }
+            stage('Dev deployment') {
+                 if (params.ENVIRONMENT == 'Dev') {
+                    // Login to azure VM, scp nginx.conf, and test new configuration
                     sshagent(credentials: ['dev-credentials']) {
                         sh "ssh  ${lb_host}"
                         sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
                         sh "ssh  ${lb_host} 'sudo nginx -t'"
                         
                     }
-                    
-                    // Copy Nginx config files to remote host
-                    //sshagent(credentials: ['dev-credentials']) {
-                    //   sh "scp -r nginx.conf ${lb_host}:~/nginx"
-                    //}
-
-                    // Verify Nginx configuration on remote host
-                    //sshagent(['dev-credentials']) {
-                    //    sh "ssh ${lb_host} 'sudo nginx -t'"
-                    //}
-
-                    // Create Pull Request for Prod branch if deploying to Dev environment
-                    //if (params.ENVIRONMENT == 'Dev') {
-                        // TODO: Add code to create Pull Request on Github
-                    }
-                }
+                 }
             }
         }
     }
