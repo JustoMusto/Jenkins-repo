@@ -37,12 +37,14 @@ pipeline {
             }
             stage('Dev deployment') {
                 steps {
-                    if (params.ENVIRONMENT == 'Dev') {
-                    // Login to azure VM, scp nginx.conf, and test new configuration
-                    sshagent(credentials: ['dev-credentials']) {
-                        sh "ssh  ${lb_host}"
-                        sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
-                        sh "ssh  ${lb_host} 'sudo nginx -t'"
+                    script {
+                        if (params.ENVIRONMENT == 'Dev') {
+                            // Login to azure VM, scp nginx.conf, and test new configuration
+                            sshagent(credentials: ['dev-credentials']) {
+                            sh "ssh  ${lb_host}"
+                            sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
+                            sh "ssh  ${lb_host} 'sudo nginx -t'"
+                            }
                         }
                     }
                  }
