@@ -4,6 +4,7 @@ pipeline {
     }
     environment {
         lb_host = ''
+        config_branch = ''
     }
     parameters {
         choice(
@@ -20,7 +21,7 @@ pipeline {
             }
             steps {
                 script {
-                    def config_branch
+                    //def config_branch
                     //def lb_host
 
                     if (params.ENVIRONMENT == 'Dev') {
@@ -48,6 +49,20 @@ pipeline {
                             sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
                             sh "ssh  ${lb_host} 'sudo nginx -t'"
                             }
+                        }
+                    }
+                 }
+            }
+            stage('Prod deployment') {
+                steps {
+                    script {
+                        config_branch = 'prod'
+                        lb_host = 'azureuser@20.232.207.120'
+                        // Login to azure VM, scp nginx.conf, and test new configuration
+                        sshagent(credentials: ['dev-credentials']) {
+                        sh "ssh  ${lb_host}"
+                        sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
+                        sh "ssh  ${lb_host} 'sudo nginx -t'"
                         }
                     }
                  }
