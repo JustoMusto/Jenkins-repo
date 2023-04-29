@@ -26,10 +26,10 @@ pipeline {
 
                     if (params.ENVIRONMENT == 'Dev') {
                         config_branch = 'dev'
-                        lb_host = 'azureuser@20.232.207.120'
+                        lb_host = 'azureuser@20.232.123.3'
                     } else if (params.ENVIRONMENT == 'Prod') {
                         config_branch = 'prod'
-                        lb_host = 'prod-load-balancer-host'
+                        lb_host = 'azureuser@74.235.214.202'
                     }
 
                     // Clone Nginx config repository
@@ -44,7 +44,7 @@ pipeline {
                     script {
                         if (params.ENVIRONMENT == 'Dev') {
                             // Login to azure VM, scp nginx.conf, and test new configuration
-                            sshagent(credentials: ['dev-credentials']) {
+                            sshagent(credentials: ['dev-lb-credentials']) {
                             sh "ssh  ${lb_host}"
                             sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
                             sh "ssh  ${lb_host} 'sudo nginx -t'"
@@ -57,9 +57,9 @@ pipeline {
                 steps {
                     script {
                         config_branch = 'prod'
-                        lb_host = 'azureuser@20.232.207.120'
+                        lb_host = 'azureuser@74.235.214.202'
                         // Login to azure VM, scp nginx.conf, and test new configuration
-                        sshagent(credentials: ['dev-credentials']) {
+                        sshagent(credentials: ['prod-lb-credentials']) {
                         sh "ssh  ${lb_host}"
                         sh "scp -r nginx.conf ${lb_host}:/etc/nginx/nginx.conf"
                         sh "ssh  ${lb_host} 'sudo nginx -t'"
